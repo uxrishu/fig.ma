@@ -1,89 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>URL Shortener</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            background-color: #f9f9f9;
-        }
-        input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        button {
-            padding: 10px 15px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        .result {
-            margin-top: 20px;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="icon" type="image/x-icon" href="./Favicon.png" />
+  </head>
+  <body>
     <div class="container">
-        <h2>Figma URL Shortener</h2>
-        <input type="text" id="longUrl" placeholder="Enter your Figma URL here">
-        <button onclick="shortenURL()">Shorten URL</button>
-
-        <div class="result" id="shortenedUrl"></div>
+      <h2>Figma URL Shortener</h2>
+      <input type="text" id="longUrl" placeholder="Enter your Figma URL here" />
+      <button onclick="shortenURL()">Shorten URL</button>
+      <div class="result" id="shortenedUrl" bis_skin_checked="1"></div>
     </div>
 
+    <a href="https://uxrishu.com/" target="_blank">
+        <img src="./logo.svg" alt="" class="uxrishu">
+    </a>
+
     <script>
-        async function shortenURL() {
-            const longUrl = document.getElementById('longUrl').value;
-            const accessToken = 'be70b50a28811d5482523a6c0ea1dcd10eab03ec';  // Replace with your Bitly API token
-            const url = 'https://api-ssl.bitly.com/v4/shorten';
+      async function shortenURL() {
+        const longUrl = document.getElementById("longUrl").value;
+        const accessToken = "be70b50a28811d5482523a6c0ea1dcd10eab03ec"; // Replace with your Bitly API token
+        const url = "https://api-ssl.bitly.com/v4/shorten";
 
-            const headers = {
-                'Authorization': `Bearer ${accessToken}`,
-                'Content-Type': 'application/json'
-            };
+        const headers = {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        };
 
-            const data = {
-                long_url: longUrl
-            };
+        const data = {
+          long_url: longUrl,
+        };
 
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: headers,
-                    body: JSON.stringify(data)
-                });
+        try {
+          const response = await fetch(url, {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(data),
+          });
 
-                if (response.ok) {
-                    const jsonResponse = await response.json();
-                    document.getElementById('shortenedUrl').innerHTML = `Shortened URL: <a href="${jsonResponse.link}" target="_blank">${jsonResponse.link}</a>`;
-                } else {
-                    document.getElementById('shortenedUrl').innerText = `Error: ${response.statusText}`;
-                }
-            } catch (error) {
-                document.getElementById('shortenedUrl').innerText = `Fetch error: ${error}`;
-            }
+          if (response.ok) {
+            const jsonResponse = await response.json();
+            document.getElementById(
+              "shortenedUrl"
+            ).innerHTML = `Shortened URL: <a href="${jsonResponse.link}" target="_blank">${jsonResponse.link}</a>`;
+          } else {
+            document.getElementById(
+              "shortenedUrl"
+            ).innerText = `Error: ${response.statusText}`;
+          }
+        } catch (error) {
+          document.getElementById(
+            "shortenedUrl"
+          ).innerText = `Fetch error: ${error}`;
         }
+      }
     </script>
-
-</body>
+  </body>
 </html>
